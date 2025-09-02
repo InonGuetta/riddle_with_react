@@ -7,9 +7,9 @@ function App() {
 
   return (
     <>
-
     <Navbar/>
       <h1>welcome from app/main</h1>
+      <></>
     </>
   )
 }
