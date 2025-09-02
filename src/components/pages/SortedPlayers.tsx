@@ -1,10 +1,10 @@
 import Navbar from "../Navbar"
 
-export default function DeleteRiddle(){
+export default function SortedPlayrs(){
     return(
         <>
         <Navbar/>
-        <h1>hay from delete</h1>
+        <h1>hay from sort</h1>
         </>
     )
 }
