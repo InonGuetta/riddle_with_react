@@ -1,0 +1,29 @@
+.h1_guide{
+    text-align: center;
+}
+
+.position_guide{
+    margin-top: 5%;
+}
+
+.design_guide{
+    width: 60%;
+    margin: 0 auto;
+    border:2px solid black ;
+}
+
+.design_guide h1{
+    text-align: center;
+}
+
+.design_guide h2{
+    margin-left: 15%;
+}
+
+.design_guide p{
+    margin-left: 7%;
+}
+
+.design_guide li{
+    margin-left: 7%;
+}

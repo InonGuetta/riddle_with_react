@@ -1,5 +1,3 @@
-// מחקה מבנה אחיד כמו של dto 
-// למרות שdata noSql לא צריכה להיות בעלת מבנה שדות אחיד בשונה מ sql טבלאי רגיל 
 type Task = {
     _id: string;
     name: string;
@@ -17,7 +15,7 @@ export const riddles: Task[] = [
     {
         _id: "a8d9e0f1-4b5a-4c6d-8e7f-2g8h9i0j1k2l",
         name: "history",
-        taskDescription: "What is the capital of France??",
+        taskDescription: "What is the capital of France?",
         correctAnswer: "paris",
     },
     {
@@ -25,6 +23,12 @@ export const riddles: Task[] = [
         name: "scince",
         taskDescription: "What is the largest planet in the solar system ?",
         correctAnswer: "Jupiter",
+    },
+    {
+        _id: "b3f2a1c9-8e7d-6f5a-4b3c-2a1b0c9d8e9f",
+        name: "math",
+        taskDescription: "10+10?",
+        correctAnswer: "20",
     },
 ];
 
@@ -36,11 +40,12 @@ type Player = {
 };
 
 export const players: Player[] = [
-    { id: 1, name: "inon", time: 2.1},
-    { id: 2, name: "david", time: 2.4},
-    { id: 3, name: "shimon", time: 2.7},
-    { id: 4, name: "yigal", time: 1.4},
-    { id: 5, name: "tomer", time: 3.2},
-    { id: 6, name: "yaron", time: 0.7}
+    { id: 1, name: "inon", time: 2.1 },
+    { id: 2, name: "david", time: 2.4 },
+    { id: 3, name: "shimon", time: 2.7 },
+    { id: 4, name: "yigal", time: 1.4 },
+    { id: 5, name: "ronen", time: 0.4 },
+    { id: 6, name: "tomer", time: 3.2 },
+    { id: 7, name: "yaron", time: 0.7 }
 ]
 
