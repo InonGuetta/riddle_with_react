@@ -1,0 +1,23 @@
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    background: linear-gradient(45deg,
+            silver,
+            #dcdcdc,
+            white);
+    border-bottom: 2px solid black;
+    box-shadow: 0px 3px 20px 0px rgb(153, 151, 151);
+}
+
+.link {
+    color: black;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.link:hover {
+    color: rgb(32, 32, 248);
+    transition: 0.1s ease;
+}

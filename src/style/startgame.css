@@ -1,0 +1,12 @@
+.no_finish {
+    display: none;
+}
+
+.finish {
+    font-size: 1rem;
+}
+
+.wrong_answer {
+    color: red;
+    font-size: 1rem;
+}
