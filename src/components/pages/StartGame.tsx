@@ -1,11 +1,14 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "../Navbar";
-
-import { riddles } from "../../data/fakeData";
+import { riddleAPI } from "../../services/api.js";
+import type { Riddle } from "../../services/api.js";
 import "../../style/startgame.css";
 
 export default function StartGame() {
+    const [riddles, setRiddles] = useState<Riddle[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     const [realIndex, setIndex] = useState(0);
     const [userAnswer, setUserAnswer] = useState("");
@@ -14,6 +17,53 @@ export default function StartGame() {
     
     const [startTime, setStartTime] = useState<number | null>(null);
     const [totalTime, setTotalTime] = useState(0);
+
+    useEffect(() => {
+        const fetchRiddles = async () => {
+            try {
+                setIsLoading(true);
+                const riddlesData = await riddleAPI.fetchRiddles();
+                setRiddles(riddlesData);
+                setError(null);
+            } catch (error) {
+                console.error('Error fetching riddles:', error);
+                setError('Failed to load riddles');
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchRiddles();
+    }, []);
+
+    if (isLoading) {
+        return (
+            <>
+                <Navbar />
+                <h1>Loading riddles...</h1>
+            </>
+        );
+    }
+
+    if (error) {
+        return (
+            <>
+                <Navbar />
+                <h1>Error: {error}</h1>
+                <p>Please make sure the server is running and try again.</p>
+            </>
+        );
+    }
+
+    if (riddles.length === 0) {
+        return (
+            <>
+                <Navbar />
+                <h1>No riddles found</h1>
+                <p>Please add some riddles first!</p>
+            </>
+        );
+    }
 
     const goodAnswer = riddles[realIndex];
 
