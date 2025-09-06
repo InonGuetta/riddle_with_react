@@ -1,8 +1,7 @@
-
 import { useState, useEffect } from "react";
 import Navbar from "../Navbar";
-import { riddleAPI } from "../../services/api.js";
-import type { Riddle } from "../../services/api.js";
+import { playerAPI, riddleAPI } from "../../services/api.js";
+import type { Player, Riddle } from "../../services/api.js";
 import "../../style/startgame.css";
 
 export default function StartGame() {
@@ -14,9 +13,50 @@ export default function StartGame() {
     const [userAnswer, setUserAnswer] = useState("");
     const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
     const [finished, setFinished] = useState(false)
-    
+
     const [startTime, setStartTime] = useState<number | null>(null);
     const [totalTime, setTotalTime] = useState(0);
+
+    const [players, setPlayers] = useState<Player[]>([]);
+    const [newPlayer, setNewPlayer] = useState({
+        id: 0,
+        name: "",
+        average_time_seconds: 0,
+    });
+
+    const savePlayerToDB = async () => {
+        try {
+            const playerData = {
+                id: players.length + 1,
+                name: newPlayer.name,
+                average_time_seconds: avargeTime,
+            };
+            await playerAPI.addPlayer(playerData);
+            console.log("Player data saved successfully:", playerData);
+        } catch (error) {
+            console.error("Error saving player data:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchPlayers();
+        if (finished) {
+            savePlayerToDB();
+        }
+    }, [finished]);
+
+    const fetchPlayers = async () => {
+        try {
+            setIsLoading(true);
+            const playersData = await playerAPI.fetchPlayers();
+            setPlayers(playersData);
+        } catch (error) {
+            console.error('Error fetching players:', error);
+            setError('Failed to load players');
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     useEffect(() => {
         const fetchRiddles = async () => {
@@ -32,7 +72,6 @@ export default function StartGame() {
                 setIsLoading(false);
             }
         };
-
         fetchRiddles();
     }, []);
 
@@ -68,7 +107,7 @@ export default function StartGame() {
     const goodAnswer = riddles[realIndex];
 
     const questionNow = () => {
-        if (startTime === null){
+        if (startTime === null) {
             setStartTime(Date.now());
         }
         const currentTime = Date.now();
@@ -91,18 +130,24 @@ export default function StartGame() {
         }
     };
 
-
-    const avargeTime = totalTime / riddles.length;
-    const avargeTimeSeconds = avargeTime/1000;
-
-
-
+    const avargeTime = (totalTime / riddles.length) / 1000;
     return (
         <>
             <Navbar />
             <h1>welcome to the game</h1>
             <div>
                 <h2>Question {realIndex + 1} of {riddles.length}</h2>
+
+                <label >your name
+                    <input
+                        id="the_name_player_this_round"
+                        type="text"
+                        value={newPlayer.name}
+                        onChange={(e) => setNewPlayer({...newPlayer, name: e.target.value})}
+                        required />
+                </label>
+
+
                 <p>{goodAnswer.taskDescription}</p>
                 <input
                     type="text"
@@ -114,12 +159,12 @@ export default function StartGame() {
                 {isCorrect === false && <p className="wrong_answer">Wrong answer, try again!</p>}
             </div>
 
-
             <div className={finished ? "finish" : "no_finish"}>
                 <h1>Congratulations! You finished the game!</h1>
-                <p className="the_time">Average response time: {avargeTimeSeconds.toFixed(2)} seconds </p>
+                <p >Player ID: {players.length + 1}</p>
+                <p >Player Name: {(document.getElementById('the_name_player_this_round') as HTMLInputElement)?.value || newPlayer.name}</p>
+                <p className="the_time">Average response time: {avargeTime.toFixed(2)} seconds </p>
             </div>
-
         </>
     );
 }

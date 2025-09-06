@@ -9,22 +9,13 @@ export default function Navbar() {
                     <Link className="link" to="/">home</Link>
                 </p>
                 <p>
-                    <Link className="link" to="/startgame">to game</Link>
-                </p>
-                <p>
-                    <Link className="link" to="/delete">delete</Link>
+                    <Link className="link link_play" to="/startgame">PLAY</Link>
                 </p>
                 <p>
                     <Link className="link" to="/allriddle">manage riddle</Link>
                 </p>
                 <p>
                     <Link className="link" to="/sortplayer">table players</Link>
-                </p>
-                <p>
-                    <Link className="link" to="/players">manage players</Link>
-                </p>
-                <p>
-                    <Link className="link" to="/update">update riddles</Link>
                 </p>
             </nav>
         </>
